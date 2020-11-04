@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "Date")
+@Table(name = "dates")
 public class DateModel {
 
     @Id
