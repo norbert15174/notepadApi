@@ -21,6 +21,15 @@ public class DateModel {
         this.time = LocalTime.now().withSecond(0);
     }
 
+    @Override
+    public String toString() {
+        return "DateModel{" +
+                "dateId=" + dateId +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
+    }
+
     public void setDateId(long dateId) {
         this.dateId = dateId;
     }

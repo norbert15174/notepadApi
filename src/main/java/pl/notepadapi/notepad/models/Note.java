@@ -17,12 +17,22 @@ public class Note {
 
     private String topic;
 
+    @Override
+    public String toString() {
+        return "Note{" +
+                "noteId=" + noteId +
+                ", topic='" + topic + '\'' +
+                ", content='" + content + '\'' +
+                dateModel +
+                '}';
+    }
+
     private String content;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Author author;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     DateModel dateModel;
 
     public Note() {

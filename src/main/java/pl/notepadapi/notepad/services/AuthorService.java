@@ -1,16 +1,16 @@
 package pl.notepadapi.notepad.services;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.notepadapi.notepad.models.Author;
-import pl.notepadapi.notepad.models.DateModel;
-import pl.notepadapi.notepad.models.Note;
+
 import pl.notepadapi.notepad.repositories.AuthorRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.Optional;
+
 
 @Service
 public class AuthorService {
@@ -18,32 +18,36 @@ public class AuthorService {
     AuthorRepository authorRepository;
     NoteService noteService;
     DateModelService dateModelService;
-
+    @Autowired
     public AuthorService(AuthorRepository authorRepository, NoteService noteService, DateModelService dateModelService) {
         this.authorRepository = authorRepository;
         this.noteService = noteService;
         this.dateModelService = dateModelService;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    void AddAuthor(){
-        Author author = new Author("Norbert");
-        Note note = new Note("Brak","asdddd");
-        DateModel dateModel = new DateModel();
-        dateModelService.addDateModel(dateModel);
-        note.setDateModel(dateModel);
-        Set<Note> notes = new HashSet<>();
-        notes.add(note);
-        author.setNotes(notes);
-        authorRepository.save(author);
-        note.setAuthor(author);
-        noteService.addNewNote(note);
-
-
-        System.out.println(authorRepository.findById(1L).get().getAuthor());
-
-
+    public Optional<Author> findAuthorByName(String name){
+        if(name.isBlank()) return null;
+        return authorRepository.findAuthorByAuthor(name);
     }
+
+    public boolean modifyAuthor(Optional<Author> author){
+        if(author.isPresent()){
+            if(authorRepository.findById(author.get().getAuthorId()).isPresent()) {
+                authorRepository.save(author.get());
+                return true;
+            }
+                return false;
+        }
+        return false;
+    }
+    public Author addAuthor(Author author){
+        if(author.getAuthor().isBlank()) return null;
+        if(authorRepository.findAuthorByAuthor(author.getAuthor()).isPresent()) return null;
+        if((Long)author.getAuthorId() == null || !authorRepository.findById(author.getAuthorId()).isPresent()) return authorRepository.save(author);
+        return null;
+    }
+
+
 
 
 }

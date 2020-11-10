@@ -1,6 +1,11 @@
 package pl.notepadapi.notepad.models;
 
+
+
+
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,8 +31,9 @@ public class Author {
         this.author = author;
     }
 
-    @OneToMany(mappedBy = "noteId")
-    private Set<Note> notes;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "noteId")
+    private Set<Note> notes = new HashSet<>();
 
 
     public long getAuthorId() {
