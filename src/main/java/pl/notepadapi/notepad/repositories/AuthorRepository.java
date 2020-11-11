@@ -11,8 +11,7 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Author,Long> {
 
 
-    @Query("select a,n from Author a, Note n" +
-     " left join fetch a.notes left join fetch n.dateModel")
+    @Query("select a from Author a left join fetch a.notes")
     public Optional<List<Author>> findAllAuthor();
 
     public Optional<Author> findAuthorByAuthor(String name);

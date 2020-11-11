@@ -4,6 +4,9 @@ package pl.notepadapi.notepad.models;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +26,6 @@ public class Author {
         return "Author{" +
                 "authorId=" + authorId +
                 ", author='" + author + '\'' +
-                ", notes=" + notes +
                 '}';
     }
 
@@ -31,8 +33,8 @@ public class Author {
         this.author = author;
     }
 
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "noteId")
+    @JsonBackReference
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private Set<Note> notes = new HashSet<>();
 
 

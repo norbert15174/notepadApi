@@ -10,19 +10,22 @@ import pl.notepadapi.notepad.repositories.AuthorRepository;
 
 
 import java.util.Optional;
+import java.util.List;
 
 
 @Service
 public class AuthorService {
 
     AuthorRepository authorRepository;
-    NoteService noteService;
-    DateModelService dateModelService;
+
     @Autowired
-    public AuthorService(AuthorRepository authorRepository, NoteService noteService, DateModelService dateModelService) {
+    public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-        this.noteService = noteService;
-        this.dateModelService = dateModelService;
+    }
+
+
+    public List<Author> findAll(){
+        return authorRepository.findAllAuthor().get();
     }
 
     public Optional<Author> findAuthorByName(String name){

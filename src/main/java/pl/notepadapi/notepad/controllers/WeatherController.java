@@ -76,6 +76,7 @@ public class WeatherController {
             weatherRepository.save(weatherObject);
             cityModel.setWeather(weatherObject);
         }
+
         for(WeatherTempInfo weatherTempInfoObject : weatherTempInfo){
             weatherTempInfoRepository.save(weatherTempInfoObject);
             cityModel.setWeatherTempInfo(weatherTempInfoObject);

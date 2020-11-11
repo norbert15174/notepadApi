@@ -1,5 +1,8 @@
 package pl.notepadapi.notepad.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,16 +26,18 @@ public class Note {
                 "noteId=" + noteId +
                 ", topic='" + topic + '\'' +
                 ", content='" + content + '\'' +
-                dateModel +
+                ", author=" + author +
+                ", dateModel=" + dateModel +
                 '}';
     }
 
     private String content;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private Author author;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     DateModel dateModel;
 
     public Note() {
