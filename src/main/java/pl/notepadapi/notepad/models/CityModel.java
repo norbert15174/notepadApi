@@ -15,9 +15,9 @@ public class CityModel {
     @OneToOne
     private DateModel dateModel;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Weather weather = new Weather();
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private WeatherTempInfo weatherTempInfo = new WeatherTempInfo();
 
     public CityModel() {

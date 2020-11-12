@@ -33,11 +33,11 @@ public class Note {
 
     private String content;
 
-    @JsonManagedReference
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+//    @JsonManagedReference
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH} , fetch = FetchType.LAZY)
     private Author author;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     DateModel dateModel;
 
     public Note() {

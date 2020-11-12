@@ -4,6 +4,7 @@ package pl.notepadapi.notepad.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.notepadapi.notepad.models.Author;
 
 import pl.notepadapi.notepad.repositories.AuthorRepository;
@@ -25,10 +26,11 @@ public class AuthorService {
 
 
     public List<Author> findAll(){
+        if(!authorRepository.findAllAuthor().isPresent()) return null;
         return authorRepository.findAllAuthor().get();
     }
 
-    public Optional<Author> findAuthorByName(String name){
+    public Optional<List<Author>> findAuthorByName(String name){
         if(name.isBlank()) return null;
         return authorRepository.findAuthorByAuthor(name);
     }
@@ -48,6 +50,11 @@ public class AuthorService {
         if(authorRepository.findAuthorByAuthor(author.getAuthor()).isPresent()) return null;
         if((Long)author.getAuthorId() == null || !authorRepository.findById(author.getAuthorId()).isPresent()) return authorRepository.save(author);
         return null;
+    }
+    @Transactional
+    public boolean delAuthor(long id){
+        if(authorRepository.findById(id).isPresent()) authorRepository.delete(authorRepository.findById(id).get());
+        return true;
     }
 
 

@@ -34,7 +34,10 @@ public class Author {
     }
 
     @JsonBackReference
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author"
+            , fetch = FetchType.LAZY
+            , cascade = CascadeType.ALL
+            ,orphanRemoval = true)
     private Set<Note> notes = new HashSet<>();
 
 
